@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "about": "À propos",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Bonjour, je suis",
+    "name": "Tsiky Sylvia",
+    "title": "Développeuse Full-Stack & IA — Mobile et Web",
+    "bio": "Développeuse full-stack basée à Antananarivo, spécialisée dans la construction d'applications web et mobiles intégrant l'IA. Avec une expérience en entreprise et un Master en Big Data & AI, je conçois des produits concrets, maintenables et orientés utilisateur — du backend au déploiement.",
+    "cta_projects": "Voir mes projets",
+    "cta_contact": "Me contacter"
+  },
+  "projects": {
+    "title": "Mes projets",
+    "subtitle": "Des applications concrètes construites avec des technologies modernes",
+    "view_demo": "Voir la démo",
+    "view_code": "Voir le code",
+    "view_details": "Voir les détails"
+  },
+  "about": {
+    "title": "À propos",
+    "subtitle": "Mon parcours et mes compétences",
+    "experience_title": "Expérience",
+    "education_title": "Formation",
+    "skills_title": "Compétences techniques",
+    "languages_title": "Langues"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Mes articles techniques",
+    "read_more": "Lire l'article"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Discutons de votre projet",
+    "name": "Nom",
+    "email": "Email",
+    "message": "Message",
+    "send": "Envoyer",
+    "sending": "Envoi en cours...",
+    "success": "Message envoyé avec succès !",
+    "error": "Erreur lors de l'envoi, réessayez."
+  },
+  "footer": {
+    "rights": "Tous droits réservés"
+  }
+}
