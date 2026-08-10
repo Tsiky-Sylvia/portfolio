@@ -3,18 +3,25 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function NavBar() {
   const t = useTranslations("nav");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Détection du scroll
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const switchLocale = () => {
     const newLocale = locale === "fr" ? "en" : "fr";
-    // Remplace le préfixe de locale dans le pathname
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.push(newPath);
   };
@@ -27,8 +34,16 @@ export default function Navbar() {
     { href: `/${locale}/contact`, label: t("contact") },
   ];
 
+  const isActive = (href: string) => pathname === href;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <Link
@@ -44,14 +59,21 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-gray-600 hover:text-violet-600 transition-colors font-medium"
+              className={`text-sm font-medium transition-colors relative ${
+                isActive(link.href)
+                  ? "text-violet-600"
+                  : "text-gray-600 hover:text-violet-600"
+              }`}
             >
               {link.label}
+              {isActive(link.href) && (
+                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-violet-600 rounded-full" />
+              )}
             </Link>
           ))}
         </div>
 
-        {/* Switcher langue + menu mobile */}
+        {/* Switcher langue + burger */}
         <div className="flex items-center gap-4">
           <button
             onClick={switchLocale}
@@ -61,27 +83,31 @@ export default function Navbar() {
             <span>{locale === "fr" ? "EN" : "FR"}</span>
           </button>
 
-          {/* Burger menu mobile */}
+          {/* Burger mobile */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden flex flex-col gap-1.5 p-1"
           >
-            <span className={`block w-5 h-0.5 bg-gray-700 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-0.5 bg-gray-700 transition-all ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-0.5 bg-gray-700 transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-5 h-0.5 bg-gray-700 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
+        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4 shadow-lg">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-sm text-gray-600 hover:text-violet-600 transition-colors font-medium"
+              className={`text-sm font-medium transition-colors ${
+                isActive(link.href)
+                  ? "text-violet-600"
+                  : "text-gray-600 hover:text-violet-600"
+              }`}
             >
               {link.label}
             </Link>

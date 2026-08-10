@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ScrollToTop from "@/components/ScrollToTop";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -43,6 +44,7 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
+          <ScrollToTop />
         </NextIntlClientProvider>
       </body>
     </html>
