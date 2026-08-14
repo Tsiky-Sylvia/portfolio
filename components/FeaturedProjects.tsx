@@ -40,8 +40,9 @@ export default function FeaturedProjects() {
   const locale = useLocale();
 
   return (
-    <section className="py-24 px-6 bg-gray-50">
+    <section className="py-24 px-6 bg-gray-50 dark:bg-gray-950 transition-colors">
       <div className="max-w-6xl mx-auto flex flex-col gap-12">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -50,10 +51,13 @@ export default function FeaturedProjects() {
           transition={{ duration: 0.5 }}
           className="text-center flex flex-col gap-3"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
             {t("title")}
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto">{t("subtitle")}</p>
+
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+            {t("subtitle")}
+          </p>
         </motion.div>
 
         {/* Projects */}
@@ -61,58 +65,131 @@ export default function FeaturedProjects() {
           {projects.map((project, index) => (
             <motion.div
               key={project.slug}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+              initial={{
+                opacity: 0,
+                x: index % 2 === 0 ? -30 : 30,
+              }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className={`bg-gradient-to-br ${project.bg} border border-gray-100 rounded-2xl p-8 flex flex-col md:flex-row gap-8 items-start`}
+              className={`
+                bg-gradient-to-br ${project.bg}
+                dark:from-gray-900 dark:to-gray-900
+                border border-gray-100 dark:border-gray-800
+                rounded-2xl
+                p-8
+                flex flex-col md:flex-row
+                gap-8
+                items-start
+                transition-colors
+              `}
             >
               {/* Emoji */}
-              <div className={`text-6xl bg-gradient-to-br ${project.color} p-6 rounded-2xl shadow-lg shrink-0`}>
+              <div
+                className={`
+                  text-6xl
+                  bg-gradient-to-br ${project.color}
+                  p-6
+                  rounded-2xl
+                  shadow-lg
+                  shrink-0
+                `}
+              >
                 {project.emoji}
               </div>
 
               {/* Content */}
               <div className="flex flex-col gap-4 flex-1">
-                <h3 className="text-2xl font-bold text-gray-900">
+
+                {/* Title */}
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+
+                {/* Description */}
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                   {project.description[locale as "fr" | "en"]}
                 </p>
+
+                {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-white rounded-full text-xs text-gray-700 border border-gray-200 font-medium shadow-sm"
+                      className="
+                        px-3 py-1
+                        bg-white dark:bg-gray-800
+                        rounded-full
+                        text-xs
+                        text-gray-700 dark:text-gray-300
+                        border border-gray-200 dark:border-gray-700
+                        font-medium
+                        shadow-sm dark:shadow-gray-950/30
+                        transition-colors
+                      "
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-4 mt-2">
-                  
-                <a href={project.demo}
+
+                {/* Buttons */}
+                <div className="flex gap-4 mt-2 flex-wrap">
+
+                  {/* Demo */}
+                  <a
+                    href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`px-5 py-2 bg-gradient-to-r ${project.color} text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity`}
+                    className={`
+                      px-5 py-2
+                      bg-gradient-to-r ${project.color}
+                      text-white
+                      rounded-xl
+                      text-sm
+                      font-medium
+                      hover:opacity-90
+                      transition-opacity
+                    `}
                   >
                     {t("view_demo")} →
                   </a>
-                  
-                   <a href={project.github}
+
+                  {/* GitHub */}
+                  <a
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-2 bg-white text-gray-700 border border-gray-200 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors"
+                    className="
+                      px-5 py-2
+                      bg-white dark:bg-gray-800
+                      text-gray-700 dark:text-gray-200
+                      border border-gray-200 dark:border-gray-700
+                      rounded-xl
+                      text-sm
+                      font-medium
+                      hover:bg-gray-50 dark:hover:bg-gray-700
+                      transition-colors
+                    "
                   >
                     GitHub
                   </a>
+
+                  {/* Details */}
                   <Link
                     href={`/${locale}/projects/${project.slug}`}
-                    className="px-5 py-2 text-gray-500 hover:text-gray-800 text-sm font-medium transition-colors"
+                    className="
+                      px-5 py-2
+                      text-gray-500 dark:text-gray-400
+                      hover:text-gray-800 dark:hover:text-gray-100
+                      text-sm
+                      font-medium
+                      transition-colors
+                    "
                   >
                     {t("view_details")} →
                   </Link>
+
                 </div>
               </div>
             </motion.div>

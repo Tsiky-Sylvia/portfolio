@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop";
 import "../globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -61,11 +62,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  viewport: {
+  /*viewport: {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
-  },
+  },*/
 };
 
 const geistSans = Geist({
@@ -94,13 +95,15 @@ export default async function LocaleLayout({
   const messages = (await import(`../../messages/${locale}.json`)).default;
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-          <ScrollToTop />
+          <ThemeProvider>
+            {children}
+            <ScrollToTop />
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

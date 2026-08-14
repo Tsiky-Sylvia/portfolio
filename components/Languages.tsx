@@ -13,7 +13,10 @@ const languages = [
   },
   {
     name: { fr: "Anglais", en: "English" },
-    level: { fr: "Intermédiaire supérieur (B2)", en: "Upper Intermediate (B2)" },
+    level: {
+      fr: "Intermédiaire supérieur (B2)",
+      en: "Upper Intermediate (B2)",
+    },
     flag: "🇬🇧",
     percentage: 70,
     color: "bg-violet-500",
@@ -39,25 +42,38 @@ export default function Languages() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
-          className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3"
+          className="
+            bg-white dark:bg-gray-800
+            rounded-2xl
+            border border-gray-100 dark:border-gray-700
+            shadow-sm dark:shadow-black/20
+            p-5
+            flex flex-col gap-3
+          "
         >
+          {/* Informations */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <span className="text-2xl">{lang.flag}</span>
+
               <div>
-                <p className="font-semibold text-gray-900">
+                <p className="font-semibold text-gray-900 dark:text-white">
                   {lang.name[locale as "fr" | "en"]}
                 </p>
-                <p className="text-xs text-gray-500">
+
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   {lang.level[locale as "fr" | "en"]}
                 </p>
               </div>
             </div>
-            <span className="text-sm font-medium text-gray-400">
+
+            <span className="text-sm font-medium text-gray-400 dark:text-gray-500">
               {lang.percentage}%
             </span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-2">
+
+          {/* Barre de progression */}
+          <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2">
             <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: `${lang.percentage}%` }}

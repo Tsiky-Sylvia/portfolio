@@ -6,7 +6,9 @@ import ProjectDetail from "@/components/ProjectDetail";
 import { getProjectBySlug, projects } from "@/lib/projects";
 
 export async function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
 }
 
 export async function generateMetadata({
@@ -38,11 +40,26 @@ export default async function ProjectPage({
   return (
     <>
       <NavBar />
-      <main className="min-h-screen pt-24 pb-16 px-6 bg-gray-50">
+
+      <main
+        className="
+          min-h-screen
+          pt-24
+          pb-16
+          px-6
+
+          bg-gray-50
+          dark:bg-[#0f0d18]
+
+          transition-colors
+          duration-300
+        "
+      >
         <div className="max-w-4xl mx-auto">
           <ProjectDetail project={project} />
         </div>
       </main>
+
       <Footer />
     </>
   );
